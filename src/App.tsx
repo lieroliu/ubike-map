@@ -64,11 +64,17 @@ function App() {
         <h2 style={{ margin: 0, flex: 1 }}>YouBike 臺北市查詢系統</h2>
         <button
           onClick={() => setShowNearby((s) => !s)}
-          style={{ marginRight: 16 }}
+          style={{
+            marginRight: 16,
+            borderRadius: 4,
+            padding: 4,
+            background: "#fff",
+            border: "1px solid #eee",
+          }}
         >
           {showNearby ? "隱藏" : "顯示"}3公里內有空位站點
         </button>
-        <div style={{ width: 300 }}>
+        <div style={{ width: 300, marginRight: 8 }}>
           <SearchBar stations={stations} onSelect={handleSelect} />
         </div>
       </div>
