@@ -15,7 +15,7 @@ export async function GET() {
       result: {
         results: data.result.results.map((result: YouBikeMonthlyUsage) => ({
           month: result.民國年月,
-          count: result["臺北市youbike每月使用量（次數)"],
+          count: result["臺北市youbike每月使用量（次數）"],
         })),
       },
     });

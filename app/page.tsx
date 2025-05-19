@@ -31,7 +31,7 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) =>
         setUsage(
-          data.result.results.map((result: YouBikeUsage) => ({
+          data.result.map((result: YouBikeUsage) => ({
             month: toYearMonth(result.month),
             count: result.count,
           }))

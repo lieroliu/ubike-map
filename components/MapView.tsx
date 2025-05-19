@@ -1,6 +1,6 @@
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { YouBikeStation } from "../types";
 
@@ -37,6 +37,29 @@ const SetMapCenter = ({
   return null;
 };
 
+// 新增 PopupWithAutoOpen 元件
+const PopupWithAutoOpen: React.FC<{
+  isOpen: boolean;
+  children: React.ReactNode;
+}> = ({ isOpen, children }) => {
+  const popupRef = useRef<L.Popup>(null);
+
+  useEffect(() => {
+    const popup = popupRef.current;
+    // 取得 map 實例
+    const map = popup && (popup as any)._source && (popup as any)._source._map;
+    if (popup && map) {
+      if (isOpen) {
+        popup.openOn(map);
+      } else {
+        popup.close();
+      }
+    }
+  }, [isOpen]);
+
+  return <Popup ref={popupRef}>{children}</Popup>;
+};
+
 const MapView: React.FC<MapViewProps> = ({
   stations,
   onSelect,
@@ -62,7 +85,7 @@ const MapView: React.FC<MapViewProps> = ({
             click: () => onSelect(station),
           }}
         >
-          <Popup>
+          <PopupWithAutoOpen isOpen={selectedStation?.sno === station.sno}>
             <div>
               <b>{station.sna}</b>
               <br />
@@ -72,7 +95,7 @@ const MapView: React.FC<MapViewProps> = ({
               <br />
               可借：{station.sbi}，空位：{station.bemp}
             </div>
-          </Popup>
+          </PopupWithAutoOpen>
         </Marker>
       ))}
     </MapContainer>
