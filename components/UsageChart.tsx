@@ -27,20 +27,20 @@ const UsageChart: React.FC<UsageChartProps> = ({ data, mode }) => {
         {mode === "line" ? (
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
+            <XAxis dataKey="月份" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="count" stroke="#8884d8" />
+            <Line type="monotone" dataKey="數量" stroke="#8884d8" />
           </LineChart>
         ) : (
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
+            <XAxis dataKey="月份" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#82ca9d" />
+            <Bar dataKey="數量" fill="#82ca9d" />
           </BarChart>
         )}
       </ResponsiveContainer>

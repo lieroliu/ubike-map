@@ -1,18 +1,19 @@
+"use client";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { fetchStations, fetchUsage } from "./api/youbike";
-import "./App.css";
-import ChartToggle from "./components/ChartToggle";
-import MapView from "./components/MapView";
-import NearbyList from "./components/NearbyList";
-import SearchBar from "./components/SearchBar";
-import StationInfo from "./components/StationInfo";
-import UsageChart from "./components/UsageChart";
-import { YouBikeStation, YouBikeUsage } from "./types";
-import { toYearMonth } from "./utils/formmat";
+import { fetchStations } from "../api/youbike";
+import ChartToggle from "../components/ChartToggle";
+import NearbyList from "../components/NearbyList";
+import SearchBar from "../components/SearchBar";
+import StationInfo from "../components/StationInfo";
+import UsageChart from "../components/UsageChart";
+import { YouBikeStation, YouBikeUsage } from "../types";
+import "./globals.css";
+const MapView = dynamic(() => import("../components/MapView"), { ssr: false });
 
 const DEFAULT_CENTER: [number, number] = [25.0478, 121.5319]; // 台北車站
 
-function App() {
+export default function Home() {
   const [stations, setStations] = useState<YouBikeStation[]>([]);
   const [selected, setSelected] = useState<YouBikeStation | undefined>();
   const [center, setCenter] = useState<[number, number]>(DEFAULT_CENTER);
@@ -22,27 +23,12 @@ function App() {
 
   useEffect(() => {
     fetchStations().then(setStations);
-    fetchUsage()
-      .then((res) =>
-        setUsage(
-          res.map((item) => ({
-            ...item,
-            month: toYearMonth(item.month),
-          }))
-        )
-      )
-      .catch(() =>
-        setUsage([
-          {
-            month: "2025-03",
-            count: 2730442,
-          },
-          {
-            month: "2025-04",
-            count: 2072168,
-          },
-        ])
-      );
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/usage")
+      .then((res) => res.json())
+      .then((data) => setUsage(data));
   }, []);
 
   const handleSelect = (station: YouBikeStation) => {
@@ -112,5 +98,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

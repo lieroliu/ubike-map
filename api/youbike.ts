@@ -1,4 +1,4 @@
-import { YouBikeStation, YouBikeUsage } from "../types";
+import { YouBikeStation } from "../types";
 
 // 取得 YouBike 站點即時資訊
 export async function fetchStations(): Promise<YouBikeStation[]> {
@@ -15,17 +15,5 @@ export async function fetchStations(): Promise<YouBikeStation[]> {
     lat: Number(item.latitude),
     lng: Number(item.longitude),
     ar: item.ar,
-  }));
-}
-
-// 取得每月使用量
-export async function fetchUsage(): Promise<YouBikeUsage[]> {
-  const res = await fetch(
-    "https://data.taipei/api/v1/dataset/8f690548-61bc-4bff-8baa-01d465eb672c?scope=resourceAquire"
-  );
-  const data = await res.json();
-  return data.results.map((item: any) => ({
-    month: item._importdate.date,
-    count: Number(item.count),
   }));
 }
