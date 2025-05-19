@@ -1,5 +1,5 @@
 "use client";
-import { toYearMonth } from "@/utils/formmat";
+import { formatTaiwanMonth } from "@/utils/formmat";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { fetchStations } from "../api/youbike";
@@ -29,14 +29,14 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/usage")
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
         setUsage(
-          data.result.map((result: YouBikeUsage) => ({
-            month: toYearMonth(result.month),
-            count: result.count,
+          data.map((result: YouBikeUsage) => ({
+            月份: formatTaiwanMonth(result.month),
+            數量: result.count,
           }))
-        )
-      );
+        );
+      });
   }, []);
   const handleSelect = (station: YouBikeStation) => {
     setSelected(station);
@@ -98,7 +98,7 @@ export default function Home() {
           <StationInfo station={selected} />
         </div>
       </div>
-      <div style={{ background: "#f5f5f5", padding: 0 }}>
+      <div style={{ background: "#f5f5f5", padding: 8 }}>
         <ChartToggle mode={chartMode} onChange={setChartMode} />
         <UsageChart data={usage} mode={chartMode} />
       </div>
