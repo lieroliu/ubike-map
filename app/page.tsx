@@ -1,4 +1,5 @@
 "use client";
+import { toYearMonth } from "@/utils/formmat";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { fetchStations } from "../api/youbike";
@@ -28,9 +29,15 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/usage")
       .then((res) => res.json())
-      .then((data) => setUsage(data));
+      .then((data) =>
+        setUsage(
+          data.result.results.map((result: YouBikeUsage) => ({
+            month: toYearMonth(result.month),
+            count: result.count,
+          }))
+        )
+      );
   }, []);
-
   const handleSelect = (station: YouBikeStation) => {
     setSelected(station);
     setCenter([station.lat, station.lng]);

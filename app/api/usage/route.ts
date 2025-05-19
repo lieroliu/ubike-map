@@ -1,4 +1,4 @@
-import type { YouBikeMonthlyUsageApiResponse } from "@/types";
+import type { YouBikeMonthlyUsage } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,10 +10,16 @@ export async function GET() {
       throw new Error("外部 API 回應失敗");
     }
     const data = await response.json();
-    // 直接回傳 data，假設格式正確
-    return NextResponse.json(data as YouBikeMonthlyUsageApiResponse);
+    return NextResponse.json({
+      ...data,
+      result: {
+        results: data.result.results.map((result: YouBikeMonthlyUsage) => ({
+          month: result.民國年月,
+          count: result["臺北市youbike每月使用量（次數)"],
+        })),
+      },
+    });
   } catch (error: any) {
-    console.error(error);
     return NextResponse.json(
       { error: error.message || "伺服器錯誤" },
       { status: 500 }

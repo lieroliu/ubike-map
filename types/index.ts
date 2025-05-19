@@ -22,8 +22,7 @@ export interface YouBikeMonthlyUsage {
     timezone: string;
   };
   民國年月: string;
-  /** 臺北市youbike每月使用量（次數） */
-  "臺北市youbike每月使用量（次數": number;
+  "臺北市youbike每月使用量（次數)": number;
 }
 
 export interface YouBikeMonthlyUsageApiResponse {
