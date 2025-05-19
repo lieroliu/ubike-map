@@ -23,7 +23,14 @@ export default function Home() {
   const [chartMode, setChartMode] = useState<"line" | "bar">("line");
 
   useEffect(() => {
-    fetchStations().then(setStations);
+    fetchStations().then((data) =>
+      setStations(
+        data.map((station) => ({
+          ...station,
+          sna: station.sna.replace("YouBike2.0_", ""),
+        }))
+      )
+    );
   }, []);
 
   useEffect(() => {
@@ -98,7 +105,7 @@ export default function Home() {
           <StationInfo station={selected} />
         </div>
       </div>
-      <div style={{ background: "#f5f5f5", padding: 8 }}>
+      <div style={{ background: "#f5f5f5", padding: 0 }}>
         <ChartToggle mode={chartMode} onChange={setChartMode} />
         <UsageChart data={usage} mode={chartMode} />
       </div>
