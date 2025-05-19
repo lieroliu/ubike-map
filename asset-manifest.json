@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ubike-map/static/css/main.7d72cf6d.css",
+    "main.js": "/ubike-map/static/js/main.68bb5234.js",
+    "static/js/453.96a5a58a.chunk.js": "/ubike-map/static/js/453.96a5a58a.chunk.js",
+    "index.html": "/ubike-map/index.html",
+    "main.7d72cf6d.css.map": "/ubike-map/static/css/main.7d72cf6d.css.map",
+    "main.68bb5234.js.map": "/ubike-map/static/js/main.68bb5234.js.map",
+    "453.96a5a58a.chunk.js.map": "/ubike-map/static/js/453.96a5a58a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d72cf6d.css",
+    "static/js/main.68bb5234.js"
+  ]
+}
